@@ -1,0 +1,1 @@
+<a href="/admin/products">Product List</a>
