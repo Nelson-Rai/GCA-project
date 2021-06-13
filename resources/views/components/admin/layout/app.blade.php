@@ -55,7 +55,7 @@
     <div class="az-header">
       <div class="container">
         <div class="az-header-left">
-          <a href="index.html" class="az-logo"><span></span> azia</a>
+          <a href="/admin/dashboard" class="az-logo"><span></span> azia</a>
           <a href="" id="azMenuShow" class="az-header-menu-icon d-lg-none"><span></span></a>
         </div><!-- az-header-left -->
         <div class="az-header-menu">
@@ -83,8 +83,15 @@
             <li class="nav-item">
               <a href="form-elements.html" class="nav-link with-sub"><i class="typcn typcn-eye-outline"></i> Products </a>
               <nav class="az-menu-sub">
-                <a href="{{ route('products.index') }}" class="nav-link">List</a>
-                <a href="{{ route('products.create') }}" class="nav-link">Create</a>
+                <a href="{{ route('admin.products.index') }}" class="nav-link">List</a>
+                <a href="{{ route('admin.products.create') }}" class="nav-link">Create</a>
+              </nav>
+            </li>
+            <li class="nav-item">
+              <a href="form-elements.html" class="nav-link with-sub"><i class="typcn typcn-eye-outline"></i> Categories </a>
+              <nav class="az-menu-sub">
+                <a href="{{ route('admin.categories.index') }}" class="nav-link">List</a>
+                <a href="{{ route('admin.categories.create') }}" class="nav-link">Create</a>
               </nav>
             </li>
             <li class="nav-item">
@@ -161,7 +168,7 @@
                 <div class="az-img-user">
                   <img src="/admin/img/faces/face1.jpg" alt="">
                 </div><!-- az-img-user -->
-                <h6>Aziana Pechon</h6>
+                <h6>{{ Auth::user()->name }}</h6>
                 <span>Premium Member</span>
               </div><!-- az-header-profile -->
 
@@ -169,7 +176,15 @@
               <a href="" class="dropdown-item"><i class="typcn typcn-edit"></i> Edit Profile</a>
               <a href="" class="dropdown-item"><i class="typcn typcn-time"></i> Activity Logs</a>
               <a href="" class="dropdown-item"><i class="typcn typcn-cog-outline"></i> Account Settings</a>
-              <a href="page-signin.html" class="dropdown-item"><i class="typcn typcn-power-outline"></i> Sign Out</a>
+                
+                    <a href="{{ route('logout') }}"
+                        class="dropdown-item"
+                          onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();"><i class="typcn typcn-power-outline"></i>Sign Out</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                        {{ csrf_field() }}
+                    </form>
+                
             </div><!-- dropdown-menu -->
           </div>
         </div><!-- az-header-right -->

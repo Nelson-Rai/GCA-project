@@ -6,10 +6,7 @@
                 <h2>Create New Product</h2>
             <form action="/admin/products" method="POST" enctype="multipart/form-data">
                 @csrf
-                Product Name : <input type="text" name="product_name" class="form-control" value={{ old('product_name') }}
-                @error('product_name')
-                    style="border-color: rebeccapurple;"
-                @enderror>
+                Product Name : <input type="text" name="product_name" class="form-control" value={{ old('product_name') }}>
                 @error('product_name')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -45,16 +42,7 @@
                 </button>
 
             </form>
-            
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+
             </div>
           </div>
         </div>

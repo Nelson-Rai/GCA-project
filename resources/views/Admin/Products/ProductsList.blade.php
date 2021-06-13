@@ -13,10 +13,10 @@
         <td>{{ substr($product->product_desc, 0, 50) }}</td>
         <td>{{ $product->price }}</td>
         <td>
-            <button><a href="/admin/products/{{ $product->id }}/edit">Edit</a></button>
+            <button><a href="{{ route('admin.products.edit', ['product' => $product->id]) }}">Edit</a></button>
 
-
-            <form action="{{ route('products.destroy', ['product'=>$product->id]) }}" method="POSt">
+            
+            <form action="{{ route('admin.products.destroy', ['product'=>$product->id]) }}" method="POSt">
             @csrf
             @method('delete')
             <button>Delete</button>

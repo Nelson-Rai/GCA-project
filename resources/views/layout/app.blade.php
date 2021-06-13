@@ -85,7 +85,7 @@
 										<li><i class="ti-location-pin"></i> Store location</li>
 										<li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
 										<li><i class="ti-user"></i> <a href="#">My account</a></li>
-										<li><i class="ti-power-off"></i><a href="login.html#">Login</a></li>
+										<li><i class="ti-power-off"></i><a href="{{ route('login') }}">Login</a></li>
 									</ul>
 								</div>
 								<!-- End Top Right -->
@@ -107,33 +107,7 @@
 								<div class="search-top">
 									<div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
 									<!-- Search Form -->
-									<div class="search-top">
-										<form class="search-form">
-											<input type="text" placeholder="Search here..." name="search">
-											<button value="search" type="submit"><i class="ti-search"></i></button>
-										</form>
-									</div>
-									<!--/ End Search Form -->
-								</div>
-								<!--/ End Search Form -->
-								<div class="mobile-nav"></div>
-							</div>
-							<div class="col-lg-8 col-md-7 col-12">
-								<div class="search-bar-top">
-									<div class="search-bar">
-										<select>
-											<option selected="selected">All Category</option>
-											<option>watch</option>
-											<option>mobile</option>
-											<option>kid’s item</option>
-										</select>
-										<form>
-											<input name="search" placeholder="Search Products Here....." type="search">
-											<button class="btnn"><i class="ti-search"></i></button>
-										</form>
-									</div>
-								</div>
-							</div>
+							@include('includes.search')
 							<div class="col-lg-2 col-md-3 col-12">
 								<div class="right-bar">
 									<!-- Search Form -->

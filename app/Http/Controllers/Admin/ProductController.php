@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
 {
@@ -53,7 +55,7 @@ class ProductController extends Controller
             'category_id.required'=> 'Please choose a category!'
         ]);
 
-        $newImageName = time() . '-' . $request->product_name . '.' . $request->image->extension();
+        $newImageName = time() . '-' . str_replace(' ','-', $request->product_name) . '.' . $request->image->extension();
         $request->image->move(public_path('productImages'),$newImageName);
 
             $product = Product::Create([
@@ -62,10 +64,11 @@ class ProductController extends Controller
             'price' => $request->input('price'),
             'category_id' => $request->input('category_id'),
             'image_path' => $newImageName,
+            'user_id' => Auth::id(),
 
         ]);
 
-        return redirect('/products');
+        return redirect('/admin/products')->with('message', 'New Product Added');
 
     }
 
@@ -100,8 +103,12 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Product $product)
     {
+        if (! Gate::allows('update-product', $product)) {
+            abort(403);
+        }
+
         $request->validate([
             'product_name' => 'required',
             'product_desc' => 'required',
@@ -120,7 +127,7 @@ class ProductController extends Controller
             'category_id' => $request->input('category_id')
         ]);
 
-        return redirect('/admin/products');
+        return redirect('/admin/products')->with('message','Product Updated');
     }
 
     /**
@@ -129,11 +136,14 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        $product = Product::find($id);
+        if (! Gate::allows('delete-product', $product)) {
+            abort(403);
+        }
+
         $product->delete();
 
-        return redirect('/admin/products');
+        return redirect('/admin/products')->with('message', 'Product Deleted');
     }
 }
