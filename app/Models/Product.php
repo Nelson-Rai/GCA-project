@@ -23,6 +23,10 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function OrderItem(){
+        return $this->hasMany(OrderItem::class);
+    }
+
     public function scopeSearch($query, array $terms){ 
         $search = $terms['search'];
         $category = $terms['category'];

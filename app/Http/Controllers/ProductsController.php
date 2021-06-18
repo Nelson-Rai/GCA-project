@@ -13,10 +13,27 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $categories = Category::all();
-        $products = Product::latest()->get();
+        
+        
+        $sort="";
+        if($request->get('sort')!==null){
+            $sort=$request->get('sort');
+        }
+
+        if($sort=='name'){
+            $products = Product::orderBy('product_name','asc')->get();
+        }elseif($sort=='price'){
+            $products = Product::orderBy('price','asc')->get();
+        }elseif($sort=='date'){
+            $products = Product::orderBy('updated_at','asc')->get();
+        }else{
+            $products = Product::latest()->get();
+        }
+
+
         return view('products.index', [
             'products'=> $products,
             'categories' => $categories,

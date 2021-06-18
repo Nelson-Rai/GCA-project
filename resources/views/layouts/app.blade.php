@@ -30,7 +30,7 @@
                         @if (Route::has('register'))
                             <a class="no-underline hover:underline" href="{{ route('register') }}">{{ __('Register') }}</a>
                         @endif
-                    @else
+                    @else 
                         <span>{{ Auth::user()->name }}</span>
 
                         <a href="{{ route('logout') }}"

@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Vendor;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Category;
-use App\Models\Product;
-use App\Models\Order;
-use App\Models\OrderItem;
 
-class CategoriesController extends Controller
+class VproductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +14,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::latest()->get();
-        $order_id = session('order_id',0);
-        $order = Order::find($order_id);
-        $orderitem = OrderItem::whereOrderId($order_id)->get();
-        return view('Category.index', compact('categories','order', 'orderitem'));
+        //
     }
 
     /**
@@ -31,7 +24,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('Category.create');
+        //
     }
 
     /**
@@ -53,14 +46,7 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-
-        $categories = Category::all();
-        $category_products = Category::find($id);
-        
-        $products = Product::whereCategoryId($id)->get();
-        // return ($products);
-        return view('category.show', compact('categories','category_products','products'));
-
+        //
     }
 
     /**
@@ -96,5 +82,4 @@ class CategoriesController extends Controller
     {
         //
     }
-
 }

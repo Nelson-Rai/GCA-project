@@ -28,6 +28,100 @@
                         </p>
                         @enderror
                     </div>
+                    <div class="flex flex-wrap">
+                        <label for="lname" class="block text-gray-700 text-sm font-bold mb-2 sm:mb-4">
+                            {{ __('Last Name') }}:
+                        </label>
+
+                        <input id="lname" type="text" class="form-input w-full @error('lname')  border-red-500 @enderror"
+                            name="lname" value="{{ old('lname') }}" required autocomplete="lname" autofocus>
+
+                        @error('lname')
+                        <p class="text-red-500 text-xs italic mt-4">
+                            {{ $message }}
+                        </p>
+                        @enderror
+                    </div>
+                    {{-- Role is assigned automatically to 1 as admin --}}
+                    
+                    <div class="flex flex-wrap">
+                        <label for="role" class="block text-gray-700 text-sm font-bold mb-2 sm:mb-4">
+                            {{ __('Register As') }}:
+                        </label>
+                        <x-forms.select name="role">
+                                <option value="">Select Your Role</option>
+                                <option value="2">Vendor</option>
+                                <option value="3">Customer</option> 
+                        </x-forms.select>
+                        @error('role')
+                        <p class="text-red-500 text-xs italic mt-4">
+                            {{ $message }}
+                        </p>
+                        @enderror
+                    </div>
+
+                    <div class="flex flex-wrap">
+                        <label for="phone" class="block text-gray-700 text-sm font-bold mb-2 sm:mb-4">
+                            {{ __('Phone Number') }}:
+                        </label>
+
+                        <input id="phone" type="string" class="form-input w-full @error('phone')  border-red-500 @enderror"
+                            name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
+
+                        @error('phone')
+                        <p class="text-red-500 text-xs italic mt-4">
+                            {{ $message }}
+                        </p>
+                        @enderror
+                    </div>
+                    <div class="flex flex-wrap">
+                        <label for="state" class="block text-gray-700 text-sm font-bold mb-2 sm:mb-4">
+                            {{ __('State') }}:
+                        </label>
+                        <x-forms.select name="state">
+                                <option value="">Select Your State</option>
+                                <option value="1">Province No. 1</option> 
+                                <option value="2">Province No. 2</option> 
+                                <option value="3">Bagmati Province</option> 
+                                <option value="4">Gandaki Province</option> 
+                                <option value="5">Lumbini Province</option> 
+                                <option value="6">Karnali Province</option> 
+                                <option value="7">Sudurpashchim Province</option> 
+                        </x-forms.select>
+                        @error('state')
+                        <p class="text-red-500 text-xs italic mt-4">
+                            {{ $message }}
+                        </p>
+                        @enderror
+                    </div>
+                    <div class="flex flex-wrap">
+                        <label for="district" class="block text-gray-700 text-sm font-bold mb-2 sm:mb-4">
+                            {{ __('District') }}:
+                        </label>
+
+                        <input id="district" type="text" class="form-input w-full @error('district')  border-red-500 @enderror"
+                            name="district" value="{{ old('district') }}" required autocomplete="district" autofocus>
+
+                        @error('district')
+                        <p class="text-red-500 text-xs italic mt-4">
+                            {{ $message }}
+                        </p>
+                        @enderror
+                    </div>
+                    <div class="flex flex-wrap">
+                        <label for="address" class="block text-gray-700 text-sm font-bold mb-2 sm:mb-4">
+                            {{ __('Local Address') }}:
+                        </label>
+
+                        <input id="address" type="text" class="form-input w-full @error('address')  border-red-500 @enderror"
+                            name="address" value="{{ old('address') }}" required autocomplete="address" autofocus>
+
+                        @error('address')
+                        <p class="text-red-500 text-xs italic mt-4">
+                            {{ $message }}
+                        </p>
+                        @enderror
+                    </div>
 
                     <div class="flex flex-wrap">
                         <label for="email" class="block text-gray-700 text-sm font-bold mb-2 sm:mb-4">

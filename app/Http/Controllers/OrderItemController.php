@@ -55,15 +55,16 @@ class OrderItemController extends Controller
             session(['order_id'=> $order->id]);
             $order_id = $order->id;
         }
-        // adding items to cart -> creating order_item
-        $order_item = new OrderItem();
-        $order_item->order_id = $order_id;
-        $order_item->product_id = $request->input('product_id');
-        $product = Product::find($order_item->product_id);
-        $order_item->product_price = $product->price;
-        $order_item->quantity = $request->input('quantity');
-        $order_item->total = $order_item->quantity * $order_item->product_price;
-        $order_item->save();
+                // adding items to cart -> creating order_item
+                $order_item = new OrderItem();
+                $order_item->order_id = $order_id;
+                $order_item->product_id = $request->input('product_id');
+                $product = Product::find($order_item->product_id);
+                $order_item->product_price = $product->price;
+                $order_item->quantity = $request->input('quantity');
+                $order_item->total = $order_item->quantity * $order_item->product_price;
+                $order_item->save();
+
         // updating order table with total price
         $order = Order::find($order_id);
         $order->sub_total += $order_item->total;
@@ -71,7 +72,7 @@ class OrderItemController extends Controller
 
         $order->save();
 
-        return redirect(route('order.show'));
+        return redirect(route('order.index'));
     }
 
     /**
@@ -82,8 +83,8 @@ class OrderItemController extends Controller
      */
     public function show(OrderItem $orderItem)
     {
-        $order_items = OrderItem::all();
-        return $order_items;
+        // $order_items = OrderItem::all();
+        // return $order_items;
     }
 
     /**
@@ -104,9 +105,17 @@ class OrderItemController extends Controller
      * @param  \App\Models\OrderItem  $orderItem
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, OrderItem $orderItem)
+    public function update(Request $request, $id)
     {
-        //
+        $product = OrderItem::find($id);
+        //return $item;
+        $product->quantity = $request->input('quantity');
+        $product->total = $product->quantity * $product->product_price;
+        $product->save();
+        $product->order->sub_total = ($product->order->sub_total - $product->product_price + $product->total);
+        $product->order->total_price = ($product->order->total_price - $product->product_price + $product->total);
+        $product->order->save();
+        return redirect(route('order.index'));
     }
 
     /**
@@ -115,8 +124,14 @@ class OrderItemController extends Controller
      * @param  \App\Models\OrderItem  $orderItem
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OrderItem $orderItem)
+    public function destroy(Request $request, $id)
     {
-        //
+        $item = OrderItem::find($id);
+
+        $item->order->sub_total -=$item->total;
+        $item->order->total_price -=$item->total; 
+        $item->order->save();
+        $item->delete();
+        return redirect(route('order.index'));
     }
 }

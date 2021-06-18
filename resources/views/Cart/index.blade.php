@@ -18,36 +18,48 @@
 							</tr>
 						</thead>
 						<tbody>
-                            @foreach ($order_items as $order_item)    
-								@foreach ($products as $product)
-									<tr>	
-										<td class="image" data-title="No"><img class="default-img" src="{{ $product->image_path == '' ? 'https://via.placeholder.com/550x750' : asset('productImages/' . $product->image_path) }}" alt="#"></td>
-										<td class="product-des" data-title="Description">
-											<p class="product-name"><a href="{{ route('products.show',$product) }}">{{ $product->product_name }}</a></p>
-											<p class="product-des">{{ $product->product_desc }}</p>
-										</td>
-										<td class="price" data-title="Price"><span>{{ $product->price }} </span></td>
-										<td class="qty" data-title="Qty"><!-- Input Order -->
-											<div class="input-group">
-												<div class="button minus">
-													<button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
-														<i class="ti-minus"></i>
-													</button>
-												</div>
-												<input type="text" name="quant[1]" class="input-number"  data-min="1" data-max="100" value="1">
-												<div class="button plus">
-													<button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
-														<i class="ti-plus"></i>
-													</button>
-												</div>
-											</div>
-											<!--/ End Input Order -->
-										</td>
-										<td class="total-amount" data-title="Total"><span>{{ $order_item->total }}</span></td>
-										<td class="action" data-title="Remove"><a href="#"><i class="ti-trash remove-icon"></i></a></td>
-									</tr>
-								@endforeach         
-                            @endforeach
+                            @foreach ($orderitem as $item)
+                            <tr>
+                            <td class="image" data-title="image"> <img class="default-img" src="{{ $item->product->image_path == '' ? 'https://via.placeholder.com/550x750' : asset('productImages/' . $item->product->image_path) }}" alt="#"></td>
+                            <td class="product-des" data-title="Description">
+                                <p class="product-name"><a href="#">{{$item->product->product_name}}</a></p>
+                                <p class="product-des">{{$item->product->product_desc}}</p>
+                            </td>
+                            <td class="price" data-title="Price"><span>{{$item->product_price}} </span></td>
+                            <td class="qty" data-title="Qty"><!-- Input Order -->
+                                <div class="input-group">
+                                <form action="{{ route('cart.update', ['cart' => $item->id]) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="number" min="1" max="50" name="quantity" value="{{$item->quantity}}">
+                                        <input type="submit" class="btn btn-dark" value="Update">
+                                    </form>
+                                     <!-- <div class="button minus">
+                                        <button type="button" class="btn btn-primary btn-number" disabled="disabled"
+                                        data-type="minus" data-field="quant[1]">
+                                            <i class="ti-minus"></i>
+                                        </button> -->
+                                    <!-- </div> 
+                                    <input type="text" name="quant[1]" class="input-number"  data-min="1" data-max="100" value="1">
+                                    <div class="button plus">
+                                        <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
+                                            <i class="ti-plus"></i>
+                                        </button>
+                                    </div> --> 
+                                </div>
+                                <!--/ End Input Order -->
+                            </td>
+                            <td class="total-amount" data-title="Total"><span>{{$item->total}}</span></td>
+                            <td class="action" data-title="Remove">
+                                <form action="{{ route('cart.destroy', ['cart'=>$item->id]) }}" method="POST">
+                                    @csrf 
+                                    <input type="hidden" name="_method" value="DELETE">
+
+                                    <a href="{{ route('order.destroy',['order'=>$order->id]) }}" onclick="event.preventDefault(); this.closest('form').submit();"><i class="ti-trash remove-icon"></i></a>
+                                </form>
+                                </td>
+                        </tr>
+                        @endforeach
 						</tbody>
 					</table>
 					<!--/ End Shopping Summery -->
@@ -67,24 +79,24 @@
 										</form>
 									</div>
 									<div class="checkbox">
-										<label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox"> Shipping (+10$)</label>
+										<label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox"> Shipping (+NPR {{ $order->shipping_price }})</label>
 									</div>
 								</div>
 							</div>
 							<div class="col-lg-4 col-md-7 col-12">
 								<div class="right">
 									<ul>
-										<li>Cart Subtotal<span>$330.00</span></li>
-										<li>Shipping<span>Free</span></li>
-										<li>You Save<span>$20.00</span></li>
-										<li class="last">You Pay<span>$310.00</span></li>
+										<li>Cart Subtotal<span>NPR {{ $order->sub_total }}</span></li>
+										<li>Shipping<span>NPR {{ $order->shipping_price }}</span></li>
+										<li>You Save<span>NPR {{ $order->discount }}</span></li>
+										<li class="last">You Pay<span>NPR {{ $order->total_price }}</span></li>
 									</ul>
 									<div class="button5">
-										<a href="#" class="btn">Checkout</a>
-										<a href="#" class="btn">Continue shopping</a>
+										<a href="{{ route('checkout') }}" class="btn">Checkout</a>
+										<a href="{{ route('products.index') }}" class="btn">Continue shopping</a>
 									</div>
 								</div>
-							</div>
+							</div>				
 						</div>
 					</div>
 					<!--/ End Total Amount -->

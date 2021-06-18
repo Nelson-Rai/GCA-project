@@ -26,7 +26,9 @@
             <link rel="stylesheet" href="/css/font-awesome.css">
             <!-- Fancybox -->
             <link rel="stylesheet" href="/css/jquery.fancybox.min.css">
-            <!-- Themify Icons -->
+            <!-- Jquery Ui -->
+			<link rel="stylesheet" href="css/jquery-ui.css">
+			<!-- Themify Icons -->
             <link rel="stylesheet" href="/css/themify-icons.css">
             <!-- Nice Select CSS -->
             <link rel="stylesheet" href="/css/niceselect.css">

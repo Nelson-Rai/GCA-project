@@ -17,19 +17,11 @@ class OrderController extends Controller
     public function index()
     {
         {
-            // $order_id = session('order_id', 0);
-            // $order = Order::find($order_id);
-            // $order_items = OrderItem::whereOrderId($order_id)->get();
-            // $order_items = OrderItem::all();
-            // $products = Product::all();
-            // return view('Cart.index', compact('products', 'order_items'));
-
-            // $order_items = OrderItem::all();
-            // $orders = Order::all();
-            // $product_id
-            // $products = Product::find($);
-
-            // 
+            
+            $order_id = session('order_id',0);
+            $order = Order::find($order_id);
+            $orderitem = OrderItem::whereOrderId($order_id)->get();
+            return view('Cart.index',compact('order','orderitem'));
         }
     }
 
@@ -99,6 +91,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+        return redirect(route('order.index'));
     }
 }
